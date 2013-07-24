@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>${page['page_title']} - ${page['app_title']}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Language" content="zh-CN"/>
+    <meta name="robots" content="index, follow" />
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      
+    <div class="masthead">
+      <ul class="nav nav-pills pull-right">
+        % for nav in page['navi']:
+          % if nav[1] == page['page_title']:
+          <li class="active">
+          % else:
+          <li>
+          % endif
+          <a href="${nav[0]}">${nav[1]}</a></li>
+        % endfor
+      </ul>
+      <h3 class="muted">${page['app_title']}</h3>
+    </div>
+
+    <hr>
+
+    <div class="hero-unit">
+    <h3>请登录：</h3>
+    
+    <form class="form-horizontal" method="post" action="">
+      <div class="control-group">
+        <label class="control-label" for="inputPassword">密码：</label>
+        <div class="controls">
+          <input type="password" id="inputPassword" name="inputPassword" placeholder="Password">
+          <button type="submit" class="btn">登录</button>
+          % if page.get('isFailed'):
+            <span class="label label-warning">登录失败</span>
+          % endif
+        </div>
+      </div>
+    </form>
+
+    <p id="result" class="text-right"></p>
+    
+    </div></div>
+    <script src="static/js/jquery-1.9.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script>
+      setInterval(function () {
+        $.ajax({
+          url:'gettime', type:"GET", success: function(msg) {
+            $('#result').text(msg);
+          }
+        });
+      }, 1000);
+    </script>
+  </body>
+</html>
